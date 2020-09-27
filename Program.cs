@@ -1,47 +1,60 @@
 ﻿using System;
 using System.IO.Ports;
+using CommandLine;
+using CommandLine.Text;
 
 namespace core_sensor_reader
 {
     class Program
     {
-        //static string port = "/dev/ttyUSB0"; // raspberry
-        static string port = "COM5"; // laptop
-
-        static SerialPort _serialPort; 
+        //static string port = "/dev/ttyUSB0"; // raspberry default
+        //static string port = "COM5"; // laptop default
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Nove SDS011 PM reader - NicolD");
-
-            // Get a list of serial port names.
-            string[] ports = SerialPort.GetPortNames();            
-            Console.WriteLine("The following serial ports were found:");       
-
-            // Display each port name to the console.             
-            foreach(string portFound in ports)             
-            {                 
-                Console.WriteLine(portFound);             
-            }             
-
-            _serialPort = new SerialPort(port);
-            
-            // Set the read/write timeouts             
-            _serialPort.ReadTimeout = 1500;             
-            _serialPort.WriteTimeout = 1500;
-            _serialPort.Open();
-            Console.WriteLine($"Port {port} Opened successfully.");     
-
-            int i = 0;
-            while (i<1000)
+            var parser = new CommandLine.Parser(with => with.HelpWriter = null);
+            var parserResult = parser.ParseArguments<CommandLineOptions>(args);
+            parserResult
+                .WithParsed<CommandLineOptions>(options => Run(options))
+                .WithNotParsed(errs => DisplayHelp(parserResult));
+        }
+    
+        static void DisplayHelp<T>(ParserResult<T> result)
+        {  
+            var helpText = HelpText.AutoBuild(result, h =>
             {
-                var b = _serialPort.ReadByte();
-                Console.WriteLine ( b.ToString() + " - " + Convert.ToString(b, 16));
+                h.AdditionalNewLineAfterOption = false;
+                h.Heading = "Nove SDS011 PM reader"; //change header
+                h.Copyright = "copy-left 2020 by Nicola Delfino";
+                return HelpText.DefaultParsingErrorsHandler(result, h);
+            }, e => e);
 
-                i++;
-            }
+            Console.WriteLine(helpText);
+        }
 
-            _serialPort.Close();            
+        private static void Run(CommandLineOptions o)
+        {
+            sensor s = new sensor();
+            s.Verbose = o.Verbose;
+            s.Port = o.SerialPort;
+            s.TableStorageUrl = o.TableStorageUrl;
+            s.TableStorageKey = o.TableStorageKey;
+
+            if (o.Verbose) Console.WriteLine("App is in Verbose mode.");
+
+            if (o.EnumeratePorts)
+                {
+                    string[] ports = SerialPort.GetPortNames();            
+                    Console.WriteLine("The following serial ports were found:");       
+
+                    // Display each port name to the console.    
+                    foreach(string portFound in ports)             
+                    {                 
+                        Console.WriteLine(portFound);             
+                    }             
+                }    
+            
+            s.ReadStream();
         }
     }
 }
