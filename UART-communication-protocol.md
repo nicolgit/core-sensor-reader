@@ -8,27 +8,27 @@
 
 
 +-------+-----------------+-----------+
-| byte  | Name            |  Content  
+| byte  | Name            |  Content  |
 +=======+=================+===========+
-| 0     | Msg header      | AA        
+| 0     | Msg header      | AA        |
 +-------+-----------------+-----------+
-| 1     | Commander No.   | C0 
+| 1     | Commander No.   | C0 |
 +-------+-----------------+-----------+
-| 2     | DATA 1 PM2.5    | Low byte 
+| 2     | DATA 1 PM2.5    | Low byte |
 +-------+-----------------+-----------+
-| 3     | DATA 2 PM2.5    | High byte
+| 3     | DATA 2 PM2.5    | High byte |
 +-------+-----------------+-----------+
-| 4     | DATA 3 PM10     | Low byte
+| 4     | DATA 3 PM10     | Low byte |
 +-------+-----------------+-----------+
-| 5     | DATA 4 PM10     | High byte
+| 5     | DATA 4 PM10     | High byte |
 +-------+-----------------+-----------+
-| 6     | DATA 5          | ID byte 1
+| 6     | DATA 5          | ID byte 1 |
 +-------+-----------------+-----------+
-| 7     | DATA 6          | ID byte 2
+| 7     | DATA 6          | ID byte 2 |
 +-------+-----------------+-----------+
-| 8     |Check-sum        |Check-sum
+| 8     |Check-sum        |Check-sum |
 +-------+-----------------+-----------+
-| 9     |Message tail     | AB
+| 9     |Message tail     | AB |
 +-------+-----------------+-----------+
 
 * Check-sum: Check-sum=DATA1+DATA2+...+DATA6 。
