@@ -54,7 +54,15 @@ namespace core_sensor_reader
                     }             
                 }    
             
-            s.ReadStream();
+            try 
+            {
+                s.ReadStream();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine ($"ERROR: {e.GetType().ToString()} - {e.Source} - {e.Message}");
+            }   
+
         }
     }
 }
