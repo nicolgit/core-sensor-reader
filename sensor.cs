@@ -1,5 +1,6 @@
 using System;
 using System.IO.Ports;
+using System.Threading;
 
 public class sensor
 {
@@ -10,7 +11,8 @@ public class sensor
     public string TableStorageUrl { get; set; }
     public string TableStorageKey { get; set; }
     public string Port { get; set; }
-    
+    public int Sampling { get; set; }
+
     public double PM25 { 
         get
         {
@@ -53,6 +55,8 @@ public class sensor
             }
 
             if (Verbose) dump();
+            
+            Thread.Sleep( 1000 * Sampling);
         }     
 
         // serialPort.Close();                   

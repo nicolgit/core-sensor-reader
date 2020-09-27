@@ -15,6 +15,9 @@ public class CommandLineOptions
     [Option('s', "serial-port", Required = true, HelpText = "Serial Port used by the Sensor")]
     public string SerialPort { get; set; }
 
+    [Option('i', "sampling-interval", Required = false, Default=2,  HelpText = "Sampling interval in seconds (default 2 sec.)")]
+    public int SamplingInterval { get; set; }
+
     [Option('e', "enumerate-ports", Required = false, HelpText = "enumerate serial ports availables on start")]
     public bool EnumeratePorts { get; set; }
 }

@@ -39,7 +39,8 @@ namespace core_sensor_reader
             s.Port = o.SerialPort;
             s.TableStorageUrl = o.TableStorageUrl;
             s.TableStorageKey = o.TableStorageKey;
-
+            s.Sampling = o.SamplingInterval;
+            
             if (o.Verbose) Console.WriteLine("App is in Verbose mode.");
 
             if (o.EnumeratePorts)
