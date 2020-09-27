@@ -64,6 +64,6 @@ public class sensor
         {
             Console.Write(Convert.ToString(b, 16).PadLeft(2, '0'));
         }
-        Console.WriteLine($"  PM2.5 {PM25.ToString("00.0")} μg/m3 - PM10 {PM10.ToString("00.0")} μg/m3");
+        Console.WriteLine($"  PM2.5 {DateTime.Now.ToString("yyyyMMdd HHmmss")} {PM25.ToString("00.0")} μg/m3 - PM10 {PM10.ToString("00.0")} μg/m3");
     }
 }
