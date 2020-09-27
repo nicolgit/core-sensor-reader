@@ -5,7 +5,8 @@ namespace core_sensor_reader
 {
     class Program
     {
-        static string port = "/dev/ttyUSB0";
+        //static string port = "/dev/ttyUSB0"; // raspberry
+        static string port = "COM5"; // laptop
 
         static SerialPort _serialPort; 
 
@@ -18,12 +19,12 @@ namespace core_sensor_reader
             Console.WriteLine("The following serial ports were found:");       
 
             // Display each port name to the console.             
-            foreach(string port in ports)             
+            foreach(string portFound in ports)             
             {                 
-                Console.WriteLine(port);             
+                Console.WriteLine(portFound);             
             }             
 
-            _serialPort = new SerialPort("/dev/ttyUSB0");
+            _serialPort = new SerialPort(port);
             
             // Set the read/write timeouts             
             _serialPort.ReadTimeout = 1500;             
@@ -35,7 +36,7 @@ namespace core_sensor_reader
             while (i<1000)
             {
                 var b = _serialPort.ReadByte();
-                Console.Write (b.ToString());
+                Console.WriteLine ( b.ToString() + " - " + Convert.ToString(b, 16));
 
                 i++;
             }
