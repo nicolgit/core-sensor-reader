@@ -2,6 +2,7 @@
 using System.IO.Ports;
 using CommandLine;
 using CommandLine.Text;
+using Microsoft.Azure.Cosmos.Table;
 
 namespace core_sensor_reader
 {
@@ -24,7 +25,7 @@ namespace core_sensor_reader
             var helpText = HelpText.AutoBuild(result, h =>
             {
                 h.AdditionalNewLineAfterOption = false;
-                h.Heading = "Nove SDS011 PM reader"; //change header
+                h.Heading = "Nova SDS011 PM reader";
                 h.Copyright = "copy-left 2020 by Nicola Delfino";
                 return HelpText.DefaultParsingErrorsHandler(result, h);
             }, e => e);
@@ -39,6 +40,8 @@ namespace core_sensor_reader
             s.Port = o.SerialPort;
             s.TableStorageUrl = o.TableStorageUrl;
             s.TableStorageKey = o.TableStorageKey;
+            s.TableStorageTable = o.TableStorageTable;
+            
             s.Sampling = o.SamplingInterval;
             
             if (o.Verbose) Console.WriteLine("App is in Verbose mode.");
