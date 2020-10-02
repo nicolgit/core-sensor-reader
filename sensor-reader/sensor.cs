@@ -96,15 +96,15 @@ public class sensor
                     PM10 = this.PM10,
                     PM25 = this.PM25
                 });
+                await table.ExecuteAsync(insertOrMergeOperation);
 
-                // Execute the operation.
-                TableResult result = await table.ExecuteAsync(insertOrMergeOperation);
-                StorageRow insertedCustomer = result.Result as StorageRow;
-
-                if (result.RequestCharge.HasValue && Verbose)
+                TableOperation insertOrMergeOperation2 = TableOperation.InsertOrMerge(new StorageRow("LAST")
                 {
-                    Console.WriteLine("Request Charge of InsertOrMerge Operation: " + result.RequestCharge);
-                }
+                    PM10 = this.PM10,
+                    PM25 = this.PM25
+                });
+                await table.ExecuteAsync(insertOrMergeOperation2);
+                
             }
             catch (StorageException e)
             {

@@ -11,6 +11,12 @@ namespace core_sensor_reader
             RowKey = DateTime.Now.ToString("HHmmss");
         }
 
+        public StorageRow(string key)
+        {
+            PartitionKey = key;
+            RowKey = key;
+        }
+
         public double PM10 { get; set; }
         public double PM25 { get; set; }
     }
