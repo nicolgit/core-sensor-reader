@@ -24,7 +24,7 @@ jobs:
       run: 
         npm install
         npm run build --prod
-      working-directory: /sensor-viewer
+      working-directory: ./sensor-viewer/
 
     - name: 'Deploy to Azure Web App'
       uses: azure/webapps-deploy@v2
