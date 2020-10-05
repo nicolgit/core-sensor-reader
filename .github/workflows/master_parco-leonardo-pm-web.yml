@@ -30,6 +30,5 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: 'parco-leonardo-pm-web'
-        slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_ee935a484e804feab29191772a6f18c7 }}
-        package: .
+        package: ./sensor-viewer/
