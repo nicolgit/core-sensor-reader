@@ -38,8 +38,7 @@ namespace core_sensor_reader
             sensor s = new sensor();
             s.Verbose = o.Verbose;
             s.Port = o.SerialPort;
-            s.TableStorageUrl = o.TableStorageUrl;
-            s.TableStorageKey = o.TableStorageKey;
+            s.TableStorageConnectionString = o.TableStorageConnectionString;
             s.TableStorageTable = o.TableStorageTable;
             
             s.Sampling = o.SamplingInterval;

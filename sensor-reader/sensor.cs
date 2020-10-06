@@ -11,8 +11,7 @@ public class sensor
     private byte[] slice = new byte[10];
 
     public bool Verbose { get; set; }
-    public string TableStorageUrl { get; set; }
-    public string TableStorageKey { get; set; }
+    public string TableStorageConnectionString { get; set; }
     public string TableStorageTable { get; set; }
     public string Port { get; set; }
     public int Sampling { get; set; }
@@ -60,8 +59,7 @@ public class sensor
 
             if (Verbose) dump();
 
-            if (TableStorageUrl != null &&
-                TableStorageKey != null &&
+            if (TableStorageConnectionString != null &&
                 TableStorageTable != null)
                 WriteDataToCloud();
             
@@ -75,7 +73,7 @@ public class sensor
         {
             if (Verbose) Console.Write ("Writing data to cloud... ");
 
-            string storageConnectionString = $"DefaultEndpointsProtocol=https;AccountName={TableStorageUrl};AccountKey={TableStorageKey};EndpointSuffix=core.windows.net";
+            string storageConnectionString = TableStorageConnectionString;
 
             // Retrieve storage account information from connection string.
             CloudStorageAccount storageAccount = CreateStorageAccountFromConnectionString(storageConnectionString);
