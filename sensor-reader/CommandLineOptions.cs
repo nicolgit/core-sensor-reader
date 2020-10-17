@@ -1,4 +1,3 @@
-using System;
 using CommandLine;
 
 public class CommandLineOptions
