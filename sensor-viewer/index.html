@@ -1,19 +1,40 @@
 <html>
     <head>
+        <title>Parco Leonardo misurazione particolato</title>
         <meta http-equiv="refresh" content="60">
         <link rel="stylesheet" href="style.css">
+        <script>
+            function loadData()
+            {
+                // window.alert("ciao");
+                document.getElementById("pm10-value").innerHTML = "<b>99.99</b>μg/m³";
+                document.getElementById("pm25-value").innerHTML = "<b>88.88</b>μg/m³";
+                document.getElementById("now-value").innerHTML = formatAMPM();
+            }
+
+            function formatAMPM() {
+            var d = new Date(),
+                minutes = d.getMinutes().toString().length == 1 ? '0'+d.getMinutes() : d.getMinutes(),
+                hours = d.getHours().toString().length == 1 ? '0'+d.getHours() : d.getHours(),
+                ampm = d.getHours() >= 12 ? 'pm' : 'am',
+                months = ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Lulgio','Agosto','Settembre','Ottobre','Novembre','Dicembre'],
+                days = ['Dom','Lun','Mar','Mer','Gio','Ven','Sab'];
+            return days[d.getDay()]+' '+d.getDate()+' '+months[d.getMonth()]+' '+d.getFullYear()+' alle '+hours+':'+minutes+ampm;
+            }
+        </script>
     </head>
-    <body>
+    <body onload="loadData()">
         <div style="width:auto; margin:0 auto;text-align: center;">
             <div class="glow">PARCO LEONARDO</div>
             <br/><br/>
             <div style="margin: 10% auto; padding: 30px; background-color: #fff9;">
-                <h1>Qualità dell'aria</h1>
+                <h1>Qualit&aacute; dell'aria</h1>
                 <br/>
                 presenza di materiale particolato aerodisperso
                 <br/><br/>
-                <div style="margin: 10px; padding: 10px; background-color: #fff4;">PM10<br/><h2>54μg/m³</h2></div>
-                <div style="margin: 10px; padding: 10px; background-color: #fff4;">PM2.5<br/><h2>19μg/m³</h2></div>
+                <div style="margin: 10px; padding: 10px; background-color: #fff4;">PM10<br/><h2 id="pm10-value">--μg/m³</h2></div>
+                <div style="margin: 10px; padding: 10px; background-color: #fff4;">PM2.5<br/><h2 id="pm25-value">--μg/m³</h2></div>
+                ultimo aggiornamento <i id="now-value">--/--/---- --:--</i>
             </div>
             
         </div>
