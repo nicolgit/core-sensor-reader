@@ -89,14 +89,14 @@ public class sensor
             try
             {
                 // Create the InsertOrReplace table operation
-                TableOperation insertOrMergeOperation = TableOperation.InsertOrMerge(new StorageRow()
+                TableOperation insertOrMergeOperation = TableOperation.InsertOrReplace(new StorageRow()
                 {
                     PM10 = this.PM10,
                     PM25 = this.PM25
                 });
                 await table.ExecuteAsync(insertOrMergeOperation);
 
-                TableOperation insertOrMergeOperation2 = TableOperation.InsertOrMerge(new StorageRow("LAST")
+                TableOperation insertOrMergeOperation2 = TableOperation.InsertOrReplace(new StorageRow("LAST")
                 {
                     PM10 = this.PM10,
                     PM25 = this.PM25
