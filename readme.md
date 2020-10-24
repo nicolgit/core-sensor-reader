@@ -11,3 +11,7 @@ scp .\publish\\* pi@raspberry.fritz.box:/home/pi/projects/core-sensor-reader/
 **copy to raspberry only 'core-*' files**
 
 scp .\publish\core-* pi@raspberry.fritz.box:/home/pi/projects/core-sensor-reader/
+
+** run app on Raspberry
+chmod 777 ./core-sensor-reader
+./core-sensor-reader
