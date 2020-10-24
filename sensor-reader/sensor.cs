@@ -34,12 +34,18 @@ public class sensor
     {
         serialPort = new SerialPort(Port);
   
+        if (Verbose) 
+        {
+            Console.WriteLine($"Port {Port}");     
+            Console.WriteLine($"Connection String {TableStorageConnectionString}"); 
+            Console.WriteLine($"Table {TableStorageTable}");
+            Console.WriteLine($"Sampling {Sampling} sec");
+        }
+        
         serialPort.ReadTimeout = 1500;             
         serialPort.WriteTimeout = 1500;
         serialPort.Open();
-        
-        if (Verbose) Console.WriteLine($"Port {Port} Opened successfully.");     
-
+        Console.WriteLine($"Serial Port -{Port}- Opened successfully.");
         int b;
         while (true)
         {
