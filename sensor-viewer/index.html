@@ -4,16 +4,31 @@
         <meta http-equiv="refresh" content="60">
         <link rel="stylesheet" href="style.css">
         <script>
-            function loadData()
+            async function loadData()
             {
-                // window.alert("ciao");
-                document.getElementById("pm10-value").innerHTML = "<b>99.99</b>μg/m³";
-                document.getElementById("pm25-value").innerHTML = "<b>88.88</b>μg/m³";
-                document.getElementById("now-value").innerHTML = formatAMPM();
+                // attenzione al nome della tabella 'laptopDebug'
+                var query  = "https://parcoleonardopmstorage.table.core.windows.net/laptopDebug(PartitionKey='LAST',RowKey='LAST')?sv=2019-12-12&ss=t&srt=sco&sp=rl&se=2099-10-18T04:53:54Z&st=2020-10-17T20:53:54Z&spr=https&sig=qVfdRy9BcCQFwzjgFXKbPk%2Baaccz0QUOlho3QUFHMTc%3D";
+
+                try {
+                    var response = await fetch(query, {
+                        method: 'GET',
+                        body: null, // string or object
+                        headers: {
+                        'Accept': 'application/json'
+                        }
+                    });
+                    const myJson = await response.json(); //extract JSON from the http response
+
+                    document.getElementById("pm10-value").innerHTML = "<b>" + myJson.PM10 + "</b>μg/m³";
+                    document.getElementById("pm25-value").innerHTML = "<b>" + myJson.PM25 + "</b>μg/m³";
+                    document.getElementById("now-value").innerHTML =  formatAMPM(myJson.Timestamp);
+                } catch (error) {
+                    document.getElementById("now-value").innerHTML = error.toString();        
+                }
             }
 
-            function formatAMPM() {
-            var d = new Date(),
+            function formatAMPM(d) {
+            var d = new Date(d),
                 minutes = d.getMinutes().toString().length == 1 ? '0'+d.getMinutes() : d.getMinutes(),
                 hours = d.getHours().toString().length == 1 ? '0'+d.getHours() : d.getHours(),
                 ampm = d.getHours() >= 12 ? 'pm' : 'am',
@@ -30,15 +45,18 @@
             <div style="margin: 10% auto; padding: 30px; background-color: #fff9;">
                 <h1>Qualit&aacute; dell'aria</h1>
                 <br/>
-                presenza di materiale particolato aerodisperso
+                presenza di materiale particolato aerodisperso in via Bernini, Fiumicino con sensore Nova SDS011
                 <br/><br/>
-                <div style="margin: 10px; padding: 10px; background-color: #fff4;">PM10<br/><h2 id="pm10-value">--μg/m³</h2></div>
-                <div style="margin: 10px; padding: 10px; background-color: #fff4;">PM2.5<br/><h2 id="pm25-value">--μg/m³</h2></div>
+                <div style="margin: 10px; padding: 10px; background-color: #fff4;">
+                    <h2>PM10<br/><div id="pm10-value">--</div></h2>
+                    soglia da non superare - 50 µg/m³
+                </div>
+
+                <div style="margin: 10px; padding: 10px; background-color: #fff4;"><h2>PM25<br/><div id="pm25-value">--</div></h2>soglia da non superare - 25 µg/m³</div>
+                
                 ultimo aggiornamento <i id="now-value">--/--/---- --:--</i>
             </div>
-            
         </div>
-        
     </body>
 </html>
 
