@@ -6,7 +6,7 @@ dotnet publish -o publish --self-contained -r linux-arm
 
 **copy to raspberry ALL files**
 
-scp .\publish\* pi@raspberry.fritz.box:/home/pi/projects/core-sensor-reader/
+scp .\publish\\* pi@raspberry.fritz.box:/home/pi/projects/core-sensor-reader/
 
 **copy to raspberry only 'core-*' files**
 
