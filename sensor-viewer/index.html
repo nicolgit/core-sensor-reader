@@ -19,8 +19,8 @@
                     });
                     const myJson = await response.json(); //extract JSON from the http response
 
-                    document.getElementById("pm10-value").innerHTML = "<b>" + myJson.PM10 + "</b>μg/m³";
-                    document.getElementById("pm25-value").innerHTML = "<b>" + myJson.PM25 + "</b>μg/m³";
+                    document.getElementById("pm10-value").innerHTML = "<b>" + myJson.PM10 + "</b>&#956;g/m&#179;";
+                    document.getElementById("pm25-value").innerHTML = "<b>" + myJson.PM25 + "</b>&#956;g/m&#179;";
                     document.getElementById("now-value").innerHTML =  formatAMPM(myJson.Timestamp);
                 } catch (error) {
                     document.getElementById("now-value").innerHTML = error.toString();        
@@ -49,10 +49,10 @@
                 <br/><br/>
                 <div style="margin: 10px; padding: 10px; background-color: #fff4;">
                     <h2>PM10<br/><div id="pm10-value">--</div></h2>
-                    soglia da non superare - 50 µg/m³
+                    soglia da non superare - 50 &#956;g/m&#179;
                 </div>
 
-                <div style="margin: 10px; padding: 10px; background-color: #fff4;"><h2>PM25<br/><div id="pm25-value">--</div></h2>soglia da non superare - 25 µg/m³</div>
+                <div style="margin: 10px; padding: 10px; background-color: #fff4;"><h2>PM25<br/><div id="pm25-value">--</div></h2>soglia da non superare - 25 &#956;g/m&#179;</div>
                 
                 ultimo aggiornamento <i id="now-value">--/--/---- --:--</i>
             </div>
