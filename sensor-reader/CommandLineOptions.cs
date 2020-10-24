@@ -11,7 +11,7 @@ public class CommandLineOptions
     [Option('t', "table-storage-table", Required = false, HelpText = "if present append reads to the specified Azure TableStorage i.e. mytable")]
     public string TableStorageTable { get; set; }
     
-    [Option('s', "serial-port", Required = true, HelpText = "Serial Port used by the Sensor")]
+    [Option('s', "serial-port", Required = false, HelpText = "Serial Port used by the Sensor")]
     public string SerialPort { get; set; }
 
     [Option('i', "sampling-interval", Required = false, Default=2,  HelpText = "Sampling interval in seconds")]

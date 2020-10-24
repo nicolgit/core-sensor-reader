@@ -57,6 +57,12 @@ namespace core_sensor_reader
                     }             
                 }    
             
+            if (o.SerialPort == null)
+            {
+                Console.WriteLine("serial ports not specified unable to start collecting data"); 
+                return;
+            }
+
             try 
             {
                 s.ReadStream();
