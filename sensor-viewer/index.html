@@ -12,18 +12,18 @@
                 try {
                     var response = await fetch(query, {
                         method: 'GET',
-                        body: null, // string or object
+                        body: null,
                         headers: {
                         'Accept': 'application/json'
                         }
                     });
-                    const myJson = await response.json(); //extract JSON from the http response
+                    const myJson = await response.json();
 
                     document.getElementById("pm10-value").innerHTML = "<b>" + myJson.PM10 + "</b>&#956;g/m&#179;";
                     document.getElementById("pm25-value").innerHTML = "<b>" + myJson.PM25 + "</b>&#956;g/m&#179;";
-                    document.getElementById("now-value").innerHTML =  formatAMPM(myJson.Timestamp);
+                    document.getElementById("now-value").innerHTML = formatAMPM(myJson.Timestamp);
                 } catch (error) {
-                    document.getElementById("now-value").innerHTML = error.toString();        
+                    document.getElementById("err-value").innerHTML = error.toString();        
                 }
             }
 
@@ -32,9 +32,9 @@
                 minutes = d.getMinutes().toString().length == 1 ? '0'+d.getMinutes() : d.getMinutes(),
                 hours = d.getHours().toString().length == 1 ? '0'+d.getHours() : d.getHours(),
                 ampm = d.getHours() >= 12 ? 'pm' : 'am',
-                months = ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Lulgio','Agosto','Settembre','Ottobre','Novembre','Dicembre'],
+                months = ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'],
                 days = ['Dom','Lun','Mar','Mer','Gio','Ven','Sab'];
-            return days[d.getDay()]+' '+d.getDate()+' '+months[d.getMonth()]+' '+d.getFullYear()+' alle '+hours+':'+minutes+ampm;
+            return days[d.getDay()]+' '+d.getDate()+' '+months[d.getMonth()]+' '+d.getFullYear()+' alle ore '+hours+':'+minutes+ampm;
             }
         </script>
     </head>
@@ -54,7 +54,8 @@
 
                 <div style="margin: 10px; padding: 10px; background-color: #fff4;"><h2>PM25<br/><div id="pm25-value">--</div></h2>soglia da non superare - 25 &#956;g/m&#179;</div>
                 
-                ultimo aggiornamento <i id="now-value">--/--/---- --:--</i>
+                ultimo aggiornamento <i id="now-value">--/--/---- --:--</i><br/>
+                <b id="err-value" style="color: red;"></b>
             </div>
         </div>
     </body>
