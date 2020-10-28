@@ -1,5 +1,9 @@
 .NET CORE app that reads from Nova PM Sensor SDS011 High Precision Laser PM2.5 Air Quality Detection Sensor
 
+![Architecture](asset/architecture.jpg)
+
+![](asset/raspberry.jpg)
+
 **Publish for Raspberry**
 
 dotnet publish -o publish --self-contained -r linux-arm
