@@ -30,6 +30,10 @@ public class sensor
         }
     }
 
+    public int Humidity => 50; // sample data
+    public double Temperature => 20.1; // sample data
+    public double Pressure => 1013.1; // sample data
+    
     public void ReadStream ()
     {
         serialPort = new SerialPort(Port);
@@ -98,7 +102,9 @@ public class sensor
                 TableOperation insertOrMergeOperation = TableOperation.InsertOrReplace(new StorageRow()
                 {
                     PM10 = this.PM10,
-                    PM25 = this.PM25
+                    PM25 = this.PM25,
+                    Humidity = this.Humidity,
+                    
                 });
                 await table.ExecuteAsync(insertOrMergeOperation);
 
