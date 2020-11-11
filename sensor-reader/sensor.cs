@@ -104,14 +104,18 @@ public class sensor
                     PM10 = this.PM10,
                     PM25 = this.PM25,
                     Humidity = this.Humidity,
-                    
+                    Pressure = this.Pressure,
+                    Temperature = this.Temperature
                 });
                 await table.ExecuteAsync(insertOrMergeOperation);
 
                 TableOperation insertOrMergeOperation2 = TableOperation.InsertOrReplace(new StorageRow("LAST")
                 {
                     PM10 = this.PM10,
-                    PM25 = this.PM25
+                    PM25 = this.PM25,
+                    Humidity = this.Humidity,
+                    Pressure = this.Pressure,
+                    Temperature = this.Temperature
                 });
                 await table.ExecuteAsync(insertOrMergeOperation2);
                 
