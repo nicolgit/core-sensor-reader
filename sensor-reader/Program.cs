@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO.Ports;
+using System.Threading.Tasks;
 using CommandLine;
 using CommandLine.Text;
 using Microsoft.Azure.Cosmos.Table;
@@ -16,7 +17,7 @@ namespace core_sensor_reader
             var parser = new CommandLine.Parser(with => with.HelpWriter = null);
             var parserResult = parser.ParseArguments<CommandLineOptions>(args);
             parserResult
-                .WithParsed<CommandLineOptions>(options => Run(options))
+                .WithParsed<CommandLineOptions>((options) => Run(options))
                 .WithNotParsed(errs => DisplayHelp(parserResult));
         }
     
@@ -35,12 +36,17 @@ namespace core_sensor_reader
 
         private static void Run(CommandLineOptions o)
         {
+            RunAsync(o).GetAwaiter().GetResult();
+        }
+
+        private static async Task RunAsync(CommandLineOptions o)
+        {
             sensor s = new sensor();
             s.Verbose = o.Verbose;
             s.Port = o.SerialPort;
             s.TableStorageConnectionString = o.TableStorageConnectionString;
             s.TableStorageTable = o.TableStorageTable;
-            
+            s.LocationName = o.LocationName;
             s.Sampling = o.SamplingInterval;
             
             if (o.Verbose) Console.WriteLine("App is in Verbose mode.");
@@ -57,15 +63,15 @@ namespace core_sensor_reader
                     }             
                 }    
             
-            if (o.SerialPort == null)
+            if (o.SerialPort == null || o.LocationName == null)
             {
-                Console.WriteLine("serial ports not specified unable to start collecting data"); 
+                Console.WriteLine("serial ports and location name required to start collecting data"); 
             }
             else
             {
                 try 
                 {
-                    s.ReadStream();
+                    await s.ReadStream();
                 }
                 catch (Exception e)
                 {

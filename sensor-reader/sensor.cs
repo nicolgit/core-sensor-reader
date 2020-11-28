@@ -1,6 +1,7 @@
 using System;
 using System.IO.Ports;
 using System.Threading;
+using System.Threading.Tasks;
 using core_sensor_reader;
 using Microsoft.Azure.Cosmos.Table;
 
@@ -15,6 +16,7 @@ public class sensor
     public string TableStorageTable { get; set; }
     public string Port { get; set; }
     public int Sampling { get; set; }
+    public string LocationName { get; set; }
 
     public double PM25 { 
         get
@@ -34,7 +36,7 @@ public class sensor
     public double Temperature => 20.1; // sample data
     public double Pressure => 1013.1; // sample data
     
-    public void ReadStream ()
+    public async Task ReadStream ()
     {
         serialPort = new SerialPort(Port);
   
@@ -44,12 +46,14 @@ public class sensor
             Console.WriteLine($"Connection String {TableStorageConnectionString}"); 
             Console.WriteLine($"Table {TableStorageTable}");
             Console.WriteLine($"Sampling {Sampling} sec");
+            Console.WriteLine($"Location name {LocationName}");
         }
         
         serialPort.ReadTimeout = 1500;             
         serialPort.WriteTimeout = 1500;
         serialPort.Open();
-        Console.WriteLine($"Serial Port -{Port}- Opened successfully.");
+        
+        if (Verbose) Console.WriteLine($"Serial Port -{Port}- Opened successfully.");
         int b;
         while (true)
         {
@@ -69,17 +73,17 @@ public class sensor
 
             if (Verbose) dump();
 
-            if (TableStorageConnectionString != null &&
-                TableStorageTable != null)
-                WriteDataToCloud();
+            if (TableStorageConnectionString != null && TableStorageTable != null)
+                await WriteDataToCloud();
             
+            if (Verbose) Console.WriteLine ($"Wait {Sampling}secs");
             Thread.Sleep( 1000 * Sampling);
         }     
 
         // serialPort.Close();                   
     }
 
-    private async void WriteDataToCloud()
+    private async Task WriteDataToCloud()
         {
             if (Verbose) Console.Write ("Writing data to cloud... ");
 
@@ -98,8 +102,10 @@ public class sensor
 
             try
             {
+                var timestamp = DateTime.Now.ToString("yyyyMMdd-HHmmss");
+
                 // Create the InsertOrReplace table operation
-                TableOperation insertOrMergeOperation = TableOperation.InsertOrReplace(new StorageRow()
+                TableOperation insertOrMergeOperation = TableOperation.InsertOrReplace(new StorageRow(LocationName, timestamp)
                 {
                     PM10 = this.PM10,
                     PM25 = this.PM25,
@@ -109,7 +115,7 @@ public class sensor
                 });
                 await table.ExecuteAsync(insertOrMergeOperation);
 
-                TableOperation insertOrMergeOperation2 = TableOperation.InsertOrReplace(new StorageRow("LAST")
+                TableOperation insertOrMergeOperation2 = TableOperation.InsertOrReplace(new StorageRow("LAST", LocationName)
                 {
                     PM10 = this.PM10,
                     PM25 = this.PM25,
@@ -118,7 +124,6 @@ public class sensor
                     Temperature = this.Temperature
                 });
                 await table.ExecuteAsync(insertOrMergeOperation2);
-                
             }
             catch (StorageException e)
             {

@@ -5,17 +5,22 @@ namespace core_sensor_reader
 
     public class StorageRow : TableEntity
     {
+        public StorageRow(string partitionKey, string rowKey): base(partitionKey, rowKey)
+        {
+            
+        }
+        /*
         public StorageRow()
         {
             PartitionKey = DateTime.Now.ToString("yyyyMMdd");
             RowKey = DateTime.Now.ToString("HHmmss");
         }
 
-        public StorageRow(string key)
+        public StorageRow(string location)
         {
-            PartitionKey = key;
-            RowKey = key;
-        }
+            PartitionKey = "LAST";
+            RowKey = location;
+        }*/
 
         public double PM10 { get; set; }
         public double PM25 { get; set; }

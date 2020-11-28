@@ -14,6 +14,9 @@ public class CommandLineOptions
     [Option('s', "serial-port", Required = false, HelpText = "Serial Port used by the Sensor")]
     public string SerialPort { get; set; }
 
+    [Option('l', "location-name", Required = false, Default=null,  HelpText = "Location Name i.e. 'Via Bernini'")]
+    public string LocationName { get; set; }
+
     [Option('i', "sampling-interval", Required = false, Default=2,  HelpText = "Sampling interval in seconds")]
     public int SamplingInterval { get; set; }
 
