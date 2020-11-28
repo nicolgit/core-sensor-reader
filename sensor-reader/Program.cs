@@ -60,18 +60,21 @@ namespace core_sensor_reader
             if (o.SerialPort == null)
             {
                 Console.WriteLine("serial ports not specified unable to start collecting data"); 
-                return;
             }
-
-            try 
+            else
             {
-                s.ReadStream();
+                try 
+                {
+                    s.ReadStream();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine ($"ERROR: {e.GetType().ToString()} - {e.Source} - {e.Message}");
+                }   
             }
-            catch (Exception e)
-            {
-                Console.WriteLine ($"ERROR: {e.GetType().ToString()} - {e.Source} - {e.Message}");
-            }   
-
+            
+            Console.WriteLine ("");
+            Console.WriteLine ($" use --help to display the help screen");
         }
     }
 }
