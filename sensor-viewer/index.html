@@ -7,7 +7,7 @@
             async function loadData()
             {
                 // attenzione al nome della tabella 'laptopDebug'
-                var query  = "https://parcoleonardopmstorage.table.core.windows.net/laptopDebug(PartitionKey='LAST',RowKey='LAST')?sv=2019-12-12&ss=t&srt=sco&sp=rl&se=2099-10-18T04:53:54Z&st=2020-10-17T20:53:54Z&spr=https&sig=qVfdRy9BcCQFwzjgFXKbPk%2Baaccz0QUOlho3QUFHMTc%3D";
+                var query  = "https://parcoleonardopmstorage.table.core.windows.net/fiumicino(PartitionKey='LAST',RowKey='Via Bernini')?sv=2019-12-12&ss=t&srt=sco&sp=rl&se=2099-10-18T04:53:54Z&st=2020-10-17T20:53:54Z&spr=https&sig=qVfdRy9BcCQFwzjgFXKbPk%2Baaccz0QUOlho3QUFHMTc%3D";
 
                 try {
                     var response = await fetch(query, {

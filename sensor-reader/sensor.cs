@@ -76,7 +76,7 @@ public class sensor
             if (TableStorageConnectionString != null && TableStorageTable != null)
                 await WriteDataToCloud();
             
-            if (Verbose) Console.WriteLine ($"Wait {Sampling}secs");
+            if (Verbose) Console.WriteLine ($"Waiting {Sampling}secs");
             Thread.Sleep( 1000 * Sampling);
         }     
 
