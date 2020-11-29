@@ -32,9 +32,11 @@ public class sensor
         }
     }
 
-    public int Humidity => 50; // sample data
-    public double Temperature => 20.1; // sample data
-    public double Pressure => 1013.1; // sample data
+    public int Humidity { get; set;}
+
+    public double Temperature {get; set;}
+    
+    public double? Pressure => null;
     
     public async Task ReadStream ()
     {
@@ -70,6 +72,26 @@ public class sensor
             {
                 slice[i] = (byte)serialPort.ReadByte();
             }
+           
+            /*
+            RunCmd c = new RunCmd();
+            var output = c.Run("/usr/bin/python3", "DHT11-reader.py", "" );
+            
+            // Text FORMAT - DHT11|Temp|22.0|C|UMID|69.0|%
+            if (Verbose) Console.WriteLine (output);
+            var array = output.Split('|');
+            if (array[0] == "DHT11" && array[1] == "Temp" && array[4]=="UMID")
+            {
+                Humidity = Convert.ToInt32(array[5]);
+                Temperature = Convert.ToDouble(array[2]);
+            }   
+            else
+            {
+                Humidity = -100;
+                Temperature = -100;
+                Console.WriteLine ("Wrong DHT11 message format");
+            } 
+            */
 
             if (Verbose) dump();
 
@@ -161,6 +183,6 @@ public class sensor
             Console.Write(Convert.ToString(b, 16).PadLeft(2, '0'));
         }
         Console.WriteLine($"{DateTime.Now.ToString("yyyyMMdd HHmmss")} PM2.5 {PM25.ToString("00.0")} μg/m3 - PM10 {PM10.ToString("00.0")} μg/m3");
-        Console.WriteLine($"{DateTime.Now.ToString("yyyyMMdd HHmmss")} Temperature {Temperature.ToString()} - Pressure {Pressure.ToString()} - Humidity {Humidity.ToString()}%");
+        //Console.WriteLine($"{DateTime.Now.ToString("yyyyMMdd HHmmss")} Temperature {Temperature.ToString()} - Pressure {Pressure.ToString()} - Humidity {Humidity.ToString()}%");
     }
 }

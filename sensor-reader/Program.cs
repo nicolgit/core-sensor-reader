@@ -26,7 +26,7 @@ namespace core_sensor_reader
             var helpText = HelpText.AutoBuild(result, h =>
             {
                 h.AdditionalNewLineAfterOption = false;
-                h.Heading = "Nova SDS011 PM reader";
+                h.Heading = "Nova SDS011 + DHD11 reader";
                 h.Copyright = "copy-left 2020 by Nicola Delfino";
                 return HelpText.DefaultParsingErrorsHandler(result, h);
             }, e => e);

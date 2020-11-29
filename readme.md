@@ -4,19 +4,38 @@
 
 ![](asset/raspberry.jpg)
 
-**Publish for Raspberry**
+# How to deploy to Raspberry
+
+## Python script to read DHT11 sensor
+
+## wiring
+
+| Raspberry         | DHT11    |
+|-------------------|----------|
+| Raspberry pin #2  | pin VCC  |
+| Raspberry pin #9  | pin GND  |
+| Raspberry pin #40 | pin DAT  |
+
+## setup
+sudo pip3 install Adafruit_DHT
+
+scp ./DHT11/*.py pi@raspberry.fritz.box:/home/pi/projects/core-sensor-reader/
+
+test: python3 DHT11-reader.py
+
+# Publish for Raspberry
 
 dotnet publish -o publish --self-contained -r linux-arm
 
-**Copy to raspberry ALL files**
+## Copy to raspberry ALL files
 
 scp .\publish\\* pi@raspberry.fritz.box:/home/pi/projects/core-sensor-reader/
 
-**Copy to raspberry only 'core-*' files**
+## Copy to raspberry only 'core-*' files
 
 scp .\publish\core-* pi@raspberry.fritz.box:/home/pi/projects/core-sensor-reader/
 
-**How to run app on a Raspberry**
+## How to run app on a Raspberry
 
 cd /home/pi/projects/core-sensor-reader/
 
