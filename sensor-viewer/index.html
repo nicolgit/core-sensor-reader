@@ -21,6 +21,7 @@
 
                     document.getElementById("pm10-value").innerHTML = "<b>" + myJson.PM10 + "</b>&#956;g/m&#179;";
                     document.getElementById("pm25-value").innerHTML = "<b>" + myJson.PM25 + "</b>&#956;g/m&#179;";
+                    document.getElementById("temp-hum").innerHTML = "temperatura " + myJson.Temperature + "C - umidita' " + myJson.Humidity + "%";
                     document.getElementById("now-value").innerHTML = formatAMPM(myJson.Timestamp);
                 } catch (error) {
                     document.getElementById("err-value").innerHTML = error.toString();        
@@ -55,6 +56,7 @@
 
                 <div style="margin: 10px; padding: 10px; background-color: #fffA;"><h2>PM25<br/><div id="pm25-value">--</div></h2>soglia da non superare - 25 &#956;g/m&#179;</div>
                 
+                <div id="temp-hum"></div>
                 ultimo aggiornamento <b><i id="now-value">--/--/---- alle --:--</i></b><br/>
                 <b id="err-value" style="color: red;"></b>
             </div>
