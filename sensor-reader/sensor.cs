@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.IO.Ports;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,6 +11,13 @@ public class sensor
 
     private SerialPort serialPort;
     private byte[] slice = new byte[10];
+    private NumberFormatInfo numberProvider = new NumberFormatInfo()
+        {
+            NumberDecimalSeparator = ".",
+            NumberGroupSeparator = ",",
+            NumberGroupSizes = new int[] { 3 }
+        };
+        
 
     public bool Verbose { get; set; }
     public string TableStorageConnectionString { get; set; }
@@ -59,6 +67,7 @@ public class sensor
         int b;
         while (true)
         {
+            // read data from PM sensor
             while ((b = serialPort.ReadByte()) != 0xAA)
             ;
 
@@ -72,18 +81,20 @@ public class sensor
             {
                 slice[i] = (byte)serialPort.ReadByte();
             }
-           
-            /*
+            
+            // read data from temp/Hum sensor
+
             RunCmd c = new RunCmd();
             var output = c.Run("/usr/bin/python3", "DHT11-reader.py", "" );
             
             // Text FORMAT - DHT11|Temp|22.0|C|UMID|69.0|%
             if (Verbose) Console.WriteLine (output);
             var array = output.Split('|');
+
             if (array[0] == "DHT11" && array[1] == "Temp" && array[4]=="UMID")
             {
-                Humidity = Convert.ToInt32(array[5]);
-                Temperature = Convert.ToDouble(array[2]);
+                Humidity = (int)Convert.ToDouble(array[5], numberProvider);
+                Temperature = Convert.ToDouble(array[2], numberProvider);
             }   
             else
             {
@@ -91,7 +102,6 @@ public class sensor
                 Temperature = -100;
                 Console.WriteLine ("Wrong DHT11 message format");
             } 
-            */
 
             if (Verbose) dump();
 
@@ -182,7 +192,6 @@ public class sensor
         {
             Console.Write(Convert.ToString(b, 16).PadLeft(2, '0'));
         }
-        Console.WriteLine($"{DateTime.Now.ToString("yyyyMMdd HHmmss")} PM2.5 {PM25.ToString("00.0")} μg/m3 - PM10 {PM10.ToString("00.0")} μg/m3");
-        //Console.WriteLine($"{DateTime.Now.ToString("yyyyMMdd HHmmss")} Temperature {Temperature.ToString()} - Pressure {Pressure.ToString()} - Humidity {Humidity.ToString()}%");
+        Console.WriteLine($"{DateTime.Now.ToString("yyyyMMdd HHmmss")} PM2.5 {PM25.ToString("00.0")} μg/m3 - PM10 {PM10.ToString("00.0")} μg/m3 - Temperature {Temperature.ToString()} - Humidity {Humidity.ToString()}%");
     }
 }
