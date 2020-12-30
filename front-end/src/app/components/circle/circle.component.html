@@ -1,0 +1,53 @@
+<ion-grid>
+  <ion-row>
+    <ion-col>
+      <small
+        >🏡 {{pollutionAreaData.street}} | 🌡 {{ pollutionAreaData.temperature }}° | RH
+        {{ pollutionAreaData.humidity }}%</small
+      >
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <circle-progress
+        [percent]="pollutionAreaData.pm25"
+        [radius]="85"
+        [outerStrokeWidth]="8"
+        [innerStrokeWidth]="4"
+        [outerStrokeColor]="calculatePollutionColor(pollutionAreaData.pm25, 'pm25')"
+        [innerStrokeColor]="'#C7E596'"
+        [animation]="true"
+        [animationDuration]="1000"
+        [animateSubtitle]="true"
+        [showUnits]="true"
+        [units]="'&#956;g/m&#179;'"
+        [startFromZero]="true"
+        [subtitle]="'PM2.5'"
+        [titleFontSize]="40"
+        [subtitleFontSize]="15"
+      >
+      </circle-progress>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <circle-progress
+        [percent]="pollutionAreaData.pm10"
+        [radius]="85"
+        [outerStrokeWidth]="8"
+        [innerStrokeWidth]="4"
+        [outerStrokeColor]="calculatePollutionColor(pollutionAreaData.pm10, 'pm10')"
+        [innerStrokeColor]="'#C7E596'"
+        [animation]="true"
+        [animationDuration]="1000"
+        [showUnits]="true"
+        [units]="'&#956;g/m&#179;'"
+        [startFromZero]="true"
+        [subtitle]="'PM10'"
+        [titleFontSize]="40"
+        [subtitleFontSize]="15"
+      ></circle-progress>
+    </ion-col>
+  </ion-row>
+</ion-grid>

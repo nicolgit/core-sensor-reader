@@ -1,0 +1,22 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title> Parco Leonardo ☁ </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-slides pager="true" (ionSlideDidChange)="slideChange()" *ngIf="isLoaded">
+    <ion-slide *ngFor="let street of pollutionData">
+      <app-circle [pollutionAreaData]="street"></app-circle>
+    </ion-slide>
+  </ion-slides>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <marquee behavior="alternate" scrollamount="6">
+      Questo progetto ha come obiettivo il monitoraggio dei livelli di
+      inquinamento del quartiere Parco Leonardo.
+    </marquee>
+  </ion-toolbar>
+</ion-footer>
