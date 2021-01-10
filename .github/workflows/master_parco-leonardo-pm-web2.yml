@@ -24,10 +24,11 @@ jobs:
       run: |
         npm install
         npm run build --if-present
+      working-directory: ./front-end/
 
     - name: 'Deploy to Azure Web App'
       uses: azure/webapps-deploy@v2
       with:
         app-name: 'parco-leonardo-pm-web2'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_3a9f66cf30c7431aa6d3f00d60e3895c }}
-        package: ./front-end
+        package: ./front-end/dist/front-end
