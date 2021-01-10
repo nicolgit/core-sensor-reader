@@ -31,4 +31,4 @@ jobs:
       with:
         app-name: 'parco-leonardo-pm-web2'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_3a9f66cf30c7431aa6d3f00d60e3895c }}
-        package: ./front-end/dist/front-end
+        package: ./front-end/www
