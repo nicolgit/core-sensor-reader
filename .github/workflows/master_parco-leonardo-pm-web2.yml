@@ -29,6 +29,5 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: 'parco-leonardo-pm-web2'
-        slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_3a9f66cf30c7431aa6d3f00d60e3895c }}
-        package: .
+        package: ./front-end
